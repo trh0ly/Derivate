@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 Overview:
 
-This project is intended to familiarize students with the Python programming language as part of the master's course "Forward transactions and financial derivatives". For this purpose, calculations will be carried out and visualized, for which real market data will also be used.
+This project is intended to familiarize students with the Python programming language as part of the master's course "Termingeschäfte und Finanzderivate". For this purpose, calculations will be carried out and visualized, for which real market data will also be used.
 
 -----------------------------------------------------------------------------
 Status:
