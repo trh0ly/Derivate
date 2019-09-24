@@ -4,5 +4,5 @@ dependencies:
   - pandas
   - matplotlib
   - scipy
-  - pip
-    - yfinance
+  - pip:
+    - yfinance==0.1.45
