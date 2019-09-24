@@ -1,6 +1,8 @@
-name: risk1
+name: derivate
 dependencies:
   - numpy
   - pandas
   - matplotlib
   - scipy
+  - requests
+  - yfinance
