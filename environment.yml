@@ -5,4 +5,4 @@ dependencies:
   - matplotlib
   - scipy
   - requests
-  - yfinance
+  - conda install -c ranaroussi yfinance
