@@ -1,4 +1,4 @@
-# Derivate
+# Derivatives DigiLab
 
 -----------------------------------------------------------------------------
 Overview:
@@ -10,7 +10,7 @@ Status:
 
 This project is under development.
 
-You can run the project here: https://mybinder.org/v2/gh/trh0ly/derivate/master
+You can run the project here: https://mybinder.org/v2/gh/trh0ly/derivatives-digilab/master
 
 -----------------------------------------------------------------------------
 Copyright:
