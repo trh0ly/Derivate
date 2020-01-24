@@ -1,0 +1,1307 @@
+%\documentclass[11pt]{article}
+\documentclass[paper=landscape]{scrartcl}
+	\usepackage[paperwidth=40cm,paperheight=265cm,margin=1in]{geometry}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{derivate}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{python-for-finance-im-mastermodul-termingeschuxe4fte-und-finanzderivate---teil-1}{%
+\section{Python for Finance im Mastermodul ``Termingeschäfte und
+Finanzderivate'' - Teil
+1}\label{python-for-finance-im-mastermodul-termingeschuxe4fte-und-finanzderivate---teil-1}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Dieses Jupyter Notebook basiert auf den Beispielen aus ``Python for
+Finance - Second Edition'' von Yuxing Yan:
+https://www.packtpub.com/big-data-and-business-intelligence/python-finance-second-edition
+Sämtliche Beispiele sind in leicht abgewandeltet Form zu finden unter:
+https://github.com/PacktPublishing/Python-for-Finance-Second-Edition
+
+\hypertarget{urheberrechtsinformationen}{%
+\subsubsection{Urheberrechtsinformationen:}\label{urheberrechtsinformationen}}
+
+MIT License
+
+Copyright (c) 2017 Packt
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+``Software''), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. \_\_\_ Version
+1.0.1 Weitere Projekte sind zu finden unter: https://github.com/trh0ly
+
+    \hypertarget{grundlegende-einstellungen}{%
+\subsection{Grundlegende
+Einstellungen:}\label{grundlegende-einstellungen}}
+
+Zunächst müssen die notwendigen Pakete (auch Module) importiert werden,
+damit auf diese zugegriffen werden kann.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np} \PY{c+c1}{\PYZsh{} Programmbibliothek die eine einfache Handhabung von Vektoren, Matrizen oder generell großen mehrdimensionalen Arrays ermöglicht}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt} \PY{c+c1}{\PYZsh{} Programmbibliothek die es erlaubt mathematische Darstellungen aller Art anzufertigen}
+\PY{k+kn}{import} \PY{n+nn}{math} \PY{c+c1}{\PYZsh{} Dieses Modul wird verwendet um Skalardaten zu berechnen, z. B. trigonometrische Berechnungen.}
+\PY{k+kn}{import} \PY{n+nn}{pylab} \PY{k}{as} \PY{n+nn}{pl} \PY{c+c1}{\PYZsh{} Pylab kombiniert die Packete PyPlot und Numpy}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd} \PY{c+c1}{\PYZsh{} Programmbibliothek die Hilfsmittel für die Verwaltung von Daten und deren Analyse anbietet}
+\PY{k+kn}{import} \PY{n+nn}{scipy} \PY{k}{as} \PY{n+nn}{sp} \PY{c+c1}{\PYZsh{} SciPy ist ein Python\PYZhy{}basiertes Ökosystem für Open\PYZhy{}Source\PYZhy{}Software für Mathematik, Naturwissenschaften und Ingenieurwissenschaften}
+\PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{stats}
+\PY{k+kn}{import} \PY{n+nn}{datetime} \PY{c+c1}{\PYZsh{} Das datetime\PYZhy{}Modul stellt Klassen bereit, mit denen Datums\PYZhy{} und Uhrzeitangaben auf einfache und komplexe Weise bearbeitet werden können}
+\PY{k+kn}{import} \PY{n+nn}{operator} \PY{c+c1}{\PYZsh{} Programmbibliothek, welche die Ausgaben übersichtlicher gestaltet}
+\PY{k+kn}{import} \PY{n+nn}{yfinance} \PY{k}{as} \PY{n+nn}{yf} \PY{c+c1}{\PYZsh{} Dieses Modul ermöglicht den Download von zuverlässigen (historischen) Marktdaten von Yahoo Finance }
+\PY{k+kn}{from} \PY{n+nn}{alternative\PYZus{}plot} \PY{k}{import} \PY{n}{alternative\PYZus{}smile} \PY{k}{as} \PY{n}{asplt}
+\PY{k+kn}{import} \PY{n+nn}{sys}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+<Figure size 640x480 with 1 Axes>
+    \end{verbatim}
+
+    
+    Anschließend werden Einstellungen definiert, die die Formatierung der
+Ausgaben betreffen. Hierfür wird das Modul \texttt{operator} genutzt.
+Außerdem wird die Breite des im Folgenden genutzten DataFrames erhöht
+und die Größe der Grafiken modifiziert, welche später angezeigt werden
+sollen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}javascript}
+\PY{n+nx}{IPython}\PY{p}{.}\PY{n+nx}{OutputArea}\PY{p}{.}\PY{n+nx}{auto\PYZus{}scroll\PYZus{}threshold} \PY{o}{=} \PY{l+m+mi}{9999}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display}\PY{p}{,} \PY{n}{HTML}
+\PY{n}{display}\PY{p}{(}\PY{n}{HTML}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{}style\PYZgt{}.container }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{ width:100}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{ !important; \PYZcb{}\PYZlt{}/style\PYZgt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+
+\PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{=} \PY{l+m+mi}{125} \PY{c+c1}{\PYZsh{} Breite Outputbox}
+\PY{n}{SIZE} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]} \PY{c+c1}{\PYZsh{} Größe Grafiken / Textgröße}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+
+\PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.width}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{SCREEN\PYZus{}WIDTH}\PY{p}{)}
+\PY{n}{centered} \PY{o}{=} \PY{n}{operator}\PY{o}{.}\PY{n}{methodcaller}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{SCREEN\PYZus{}WIDTH}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{figure.figsize}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{SIZE}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{SIZE}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} 
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font.size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{SIZE}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \hypertarget{aufgabe-1---payoff--und-gewinn-verlustfunktionen-fuxfcr-call--und-put-optionen}{%
+\subsection{Aufgabe 1 - Payoff- und Gewinn-/Verlustfunktionen für Call-
+und
+Put-Optionen}\label{aufgabe-1---payoff--und-gewinn-verlustfunktionen-fuxfcr-call--und-put-optionen}}
+
+Variablenverzeichnis: - s = Preis der Aktie zum Fälligkeitsdatum - b =
+Ausübungspreis (Basispreis) - c = Options-Prämie für einen Call - p =
+Options-Prämie für einen Put
+
+\hypertarget{bestimmung-des-payoffs-einer-call-option}{%
+\subsubsection{1.1) Bestimmung des Payoffs einer
+Call-Option}\label{bestimmung-des-payoffs-einer-call-option}}
+
+Annahme: Der Ausübungspreis (Basispreis) \texttt{b} beträgt 30 GE 1.
+Fall: Am Zeitpunkt \texttt{t} (Fälligkeit) beträgt der Preis der Aktie
+\texttt{s}=25 GE -\textgreater{} Option wird nicht ausgeübt, da die
+Aktie am Markt günstiger zu haben ist 1. Fall: Am Zeitpunkt \texttt{t}
+(Fälligkeit) beträgt der Preis der Aktie \texttt{s}=40 GE
+-\textgreater{} Option wird ausgeübt, da die Aktie am Markt teurer ist
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Definition der Funktion \PYZdq{}payoff\PYZus{}call\PYZdq{}, welche den Payoff einer Call\PYZhy{}Option betimmt}
+\PY{k}{def} \PY{n+nf}{payoff\PYZus{}call}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}    
+    \PY{k}{return} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}
+
+\PY{c+c1}{\PYZsh{} Definition der Funktion \PYZdq{}payoff\PYZus{}put\PYZdq{}, welche den Payoff einer Put\PYZhy{}Option betimmt}
+\PY{k}{def} \PY{n+nf}{payoff\PYZus{}put}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}    
+    \PY{k}{return} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{\PYZhy{}} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}
+
+\PY{c+c1}{\PYZsh{} Anwendung der Funktionen mit den Parametern s=25; s=40 und b=30 und Ausgabe des Ergebnisses}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Payoff einer Call\PYZhy{}Option mit den Parametern s=25 und b=30 beträgt: }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{payoff\PYZus{}call}(25,30)) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Payoff einer Call\PYZhy{}Option mit den Parametern s=40 und b=30 beträgt: }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{payoff\PYZus{}call}(40,30)) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Payoff einer Put\PYZhy{}Option mit den Parametern s=25 und b=30 beträgt: }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{payoff\PYZus{}put}(25,30)) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Payoff einer Put\PYZhy{}Option mit den Parametern s=40 und b=30 beträgt: }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{payoff\PYZus{}put}(40,30)) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                           Der Payoff einer Call-Option mit den Parametern s=25
+und b=30 beträgt: 0                          |
+|                          Der Payoff einer Call-Option mit den Parametern s=40
+und b=30 beträgt: 10                          |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                           Der Payoff einer Put-Option mit den Parametern s=25
+und b=30 beträgt: 0                           |
+|                          Der Payoff einer Put-Option mit den Parametern s=40
+und b=30 beträgt: -10                          |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{bestimmung-des-payoffs-einer-call-option-array}{%
+\subsubsection{1.2) Bestimmung des Payoffs einer Call-Option
+(Array)}\label{bestimmung-des-payoffs-einer-call-option-array}}
+
+Der Aktienkurs \texttt{s} zum Zeitpunkt \texttt{t} kann auch als ein
+Array definiert sein, sodass statt einem Wert nun mehrere zurückgegeben
+werden.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{20} \PY{c+c1}{\PYZsh{} Ausübungspreis}
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{50}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+
+\PY{c+c1}{\PYZsh{} Anwendung der Funktion mit den Parametern s=(10,20,30,40) und b=20 und Ausgabe des Ergebnisses}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Die Payoffs der Call\PYZhy{}Option für s=}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ und b=20 betragen: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{payoff\PYZus{}call}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Die Payoffs der Put\PYZhy{}Option für s=}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ und b=20 betragen: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{payoff\PYZus{}put}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{b}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                     Die Payoffs der Call-Option für s=[10 20 30 40] und b=20
+betragen: [ 0.  0. 10. 20.]                    |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                   Die Payoffs der Put-Option für s=[10 20 30 40] und b=20
+betragen: [  0.   0. -10. -20.]                   |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{graphische-veranschaulichung-des-payoffs-einer-call-option}{%
+\subsubsection{1.3) Graphische Veranschaulichung des Payoffs einer
+Call-Option}\label{graphische-veranschaulichung-des-payoffs-einer-call-option}}
+
+Auf Grundlage von 1.2) kann die Payoff-Funktion der Call-Option
+graphisch veranschaulicht werden.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{20} \PY{c+c1}{\PYZsh{} Ausübungspreis}
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{50}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+
+\PY{n}{payoff} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{c+c1}{\PYZsh{} Bestimmung des Payoffs für jedes Element im Array}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{payoff}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Payoff\PYZhy{}Funktion (Call)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Payoff eines Calls mit Strike b=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b}) \PYZsh{} Titel der Grafik
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Payoff des Calls}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{graphische-veranschaulichung-der-gewinn-verlustfunktion-eines-kuxe4ufersverkuxe4uferes-bei-einer-call-option}{%
+\subsubsection{1.4) Graphische Veranschaulichung der
+Gewinn-/Verlustfunktion eines Käufers/Verkäuferes bei einer
+Call-Option}\label{graphische-veranschaulichung-der-gewinn-verlustfunktion-eines-kuxe4ufersverkuxe4uferes-bei-einer-call-option}}
+
+Die Payoff-Funktionen von Käufer und Verkäufer einer Call-Option
+verlaufen entgegengesetzt. Ist \texttt{b} bspw. 45 und \texttt{s}=50,
+ergibt sich ein Payoff i.H.v. 5 für den Käufer der Call-Option. Im
+selben Umfang erleidet der Verkäufer der Call-Option einen Verlust.
+Anschließend ist noch die Optionsprämie \texttt{c} i.H.v. 2.5 GE zu
+verrechnen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{70}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{45} \PY{c+c1}{\PYZsh{} Ausübungspreis}
+\PY{n}{c} \PY{o}{=} \PY{l+m+mf}{2.5} \PY{c+c1}{\PYZsh{} Options\PYZhy{}Prämie für einen Call}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Die Netto\PYZhy{}Payoffs für s=}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ und b=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b} + \PYZsq{} betragen: \PYZsq{} + str(payoff\PYZus{}call(s,b) \PYZhy{} c) + \PYZsq{} (Long\PYZhy{}Call)\PYZsq{}) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bzw. }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{payoff\PYZus{}put}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{b}\PY{p}{)} \PY{o}{+} \PY{n}{c}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ für den Short\PYZhy{}Call}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{n}{y} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c} \PY{c+c1}{\PYZsh{} Bestimmung der Gewinn\PYZhy{}/Verlustfunktion für jedes Element im Array}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{35}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Gewinn\PYZhy{}/Verlustfunktion für den Käufer der Call\PYZhy{}Option}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Gewinn\PYZhy{}/Verlustfunktion für den Verkäufer der Call\PYZhy{}Option}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Geraden zur Markierung des Ausübungspreises}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{o}{+}\PY{n}{c}\PY{p}{,}\PY{n}{b}\PY{o}{+}\PY{n}{c}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn\PYZhy{}/Verlustfunktion für eine Call\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Käufer Call\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{52.5}\PY{p}{,}\PY{l+m+mf}{6.5}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{52.5}\PY{p}{,}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Verkäufer Call\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{52.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mf}{6.5}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{52.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis (Basispreis) b=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b}, xy = (45,\PYZhy{}30), xytext=(32.5,\PYZhy{}22.5), arrowprops=dict(facecolor=\PYZsq{}green\PYZsq{}, shrink=0.05)) \PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis b + Optionsprämie c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{45}\PY{o}{+}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{50}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mf}{22.5}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|  Die Netto-Payoffs für s=[30 35 40 45 50 55 60 65] und b=45 betragen: [-2.5
+-2.5 -2.5 -2.5  2.5  7.5 12.5 17.5] (Long-Call) |
+|                          Bzw. [  2.5   2.5   2.5   2.5  -2.5  -7.5 -12.5
+-17.5] für den Short-Call                          |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{graphische-veranschaulichung-der-gewinn-verlustfunktion-eines-kuxe4ufersverkuxe4uferes-bei-einer-put-option}{%
+\subsubsection{1.5) Graphische Veranschaulichung der
+Gewinn-/Verlustfunktion eines Käufers/Verkäuferes bei einer
+Put-Option}\label{graphische-veranschaulichung-der-gewinn-verlustfunktion-eines-kuxe4ufersverkuxe4uferes-bei-einer-put-option}}
+
+Analog lässt sich dies auch für eine Put-Option veranschaulichen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{70}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{45} \PY{c+c1}{\PYZsh{} Ausübungspreis}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mf}{2.5} \PY{c+c1}{\PYZsh{} Options\PYZhy{}Prämie für einen Put}
+
+\PY{n}{y} \PY{o}{=} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{p} \PY{c+c1}{\PYZsh{} Bestimmung der Gewinn\PYZhy{}/Verlustfunktion für jedes Element im Array}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{35}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Gewinn\PYZhy{}/Verlustfunktion für den Käufer der Put\PYZhy{}Option}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{y}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Gewinn\PYZhy{}/Verlustfunktion für den Verkäufer der Put\PYZhy{}Option}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Geraden zur Markierung des Ausübungspreises}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{,}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn\PYZhy{}/Verlustfunktion für eine Put\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik }
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Käufer Put\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{32.5}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{32.5}\PY{p}{,}\PY{l+m+mf}{20.5}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Verkäufer }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Put\PYZhy{}Option}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{32.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{32.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil }
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis (Basispreis) b=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b}, xy = (45,\PYZhy{}30), xytext=(47.5,\PYZhy{}22.5), arrowprops=dict(facecolor=\PYZsq{}green\PYZsq{}, shrink=0.05)) \PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis b \PYZhy{} Optionsprämie p}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{45}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{47.5}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{15}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{aufagbe-2---ein-uxfcberblick-uxfcber-verschiedene-tradingstrategien}{%
+\subsection{Aufagbe 2 - Ein Überblick über Verschiedene
+Tradingstrategien}\label{aufagbe-2---ein-uxfcberblick-uxfcber-verschiedene-tradingstrategien}}
+
+    Variablenverzeichnis: - c = Optionsprämie für einen Call - s = Preis der
+Aktie zum Fälligkeitsdatum - tau = Aktueller Preis der Aktie - b =
+Ausübungspreis (Basispreis) - p = Options-Prämie für einen Put
+
+    \hypertarget{covered-call---eine-kombination-aus-einer-aktie-in-der-long-position-und-der-short-position-eines-calls}{%
+\subsubsection{2.1) Covered Call - Eine Kombination aus einer Aktie in
+der Long-Position und der Short-Position eines
+Calls}\label{covered-call---eine-kombination-aus-einer-aktie-in-der-long-position-und-der-short-position-eines-calls}}
+
+In dieser Grafik sind die Payoff-Funktionen eines Aktienkaufs, eines
+covered Calls und eines Calls zu sehen. Sofern der Preis der Aktie unter
+17 GE bleibt (\texttt{b}=15 + \texttt{c}=2), ist der gedeckte Call dem
+Aktienkauf vorzuziehen, da ein niedrigerer Preis des Underlyings
+ausreicht um denselben Payoff zu erzielen. Darüber hinaus ist der
+alleinige Aktienkauf von Vorteil.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{15} \PY{c+c1}{\PYZsh{} Ausübungspreis (Basispreis)}
+\PY{n}{tau} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} Aktueller Preis der Aktie}
+\PY{n}{c} \PY{o}{=} \PY{l+m+mi}{2} \PY{c+c1}{\PYZsh{} Optionsprämie für einen Call}
+
+\PY{n}{y1} \PY{o}{=} \PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{tau} \PY{c+c1}{\PYZsh{} Nur Aktienkauf}
+\PY{n}{y2} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c} \PY{c+c1}{\PYZsh{} Call}
+\PY{n}{y3} \PY{o}{=} \PY{n}{y1} \PY{o}{\PYZhy{}} \PY{n}{y2} \PY{c+c1}{\PYZsh{} Covered Call}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den alleinigen Aktienkauf}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y2}\PY{p}{)} \PY{c+c1}{\PYZsh{}  Plotten der Funktion für den Call}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den gedeckten Call}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mf}{7.5}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Geraden zur Markierung des Ausübungspreises}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Covered Call (Long\PYZhy{}Position and short one call)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik }
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Nur Aktienkauf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{15}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{18}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Covered Call}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Call}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{19}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis (Basispreis) b=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b}, xy = (b + 0.2,\PYZhy{}10 + 0.5), xytext=(17.5,\PYZhy{}8.5), arrowprops=dict(facecolor=\PYZsq{}green\PYZsq{}, shrink=0.05)) \PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{straddle---kauf-eines-calls-und-eines-puts-mit-demselben-ausuxfcbungspreis}{%
+\subsubsection{2.2) Straddle - Kauf eines Calls und eines Puts mit
+demselben
+Ausübungspreis}\label{straddle---kauf-eines-calls-und-eines-puts-mit-demselben-ausuxfcbungspreis}}
+
+Bei einem Straddle erfolgt der Kauf eines Calls und eines Puts mit
+demselben Ausübungspreis. Anwendung findet diese Optionsstrategie bspw.,
+wenn nicht abgeschätzt werden kann welche Auswirkungen (positiv oder
+negativ) ein zukünftiges Unternehmensereignis hat. Sofern sich der Preis
+der Aktie in eine beliebige Richtung bewegt, profitiert der Halter der
+beiden Positionen. Der Break-Even-Point wird erreicht, sobald die
+Auszahlung die Kosten der Optionsprämie \texttt{c} und \texttt{p} deckt.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{80}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{50} \PY{c+c1}{\PYZsh{} Ausübungspreis}
+\PY{n}{c} \PY{o}{=} \PY{l+m+mi}{2} \PY{c+c1}{\PYZsh{} Optionsprämie für einen Call}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mi}{1} \PY{c+c1}{\PYZsh{} Optionsprämie für einen Put }
+
+\PY{n}{call} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c} \PY{c+c1}{\PYZsh{} Call}
+\PY{n}{put} \PY{o}{=} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{p} \PY{c+c1}{\PYZsh{} Put}
+\PY{n}{straddle} \PY{o}{=} \PY{n}{call} \PY{o}{+} \PY{n}{put} \PY{c+c1}{\PYZsh{} Straddle}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{70}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der X\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{straddle}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den Straddle}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Geraden zur Markierung des Ausübungspreises}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust\PYZhy{}Funktion für einen Straddle}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik }
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Punkt 1=}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{p}{)}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Punkt 2=}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{n}{c}\PY{o}{+}\PY{n}{p}\PY{p}{)}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{n}{c}\PY{o}{+}\PY{n}{p}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{n}{b}\PY{o}{+}\PY{n}{c}\PY{o}{+}\PY{n}{p}\PY{p}{,}\PY{l+m+mf}{4.5}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausübungspreis (Basispreis)= }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b}, xy = (50,\PYZhy{}5), xytext=(51.5,\PYZhy{}5), arrowprops=dict(facecolor=\PYZsq{}green\PYZsq{}, shrink=0.05)) \PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{butterfly-mit-calls}{%
+\subsubsection{2.3) Butterfly mit Calls}\label{butterfly-mit-calls}}
+
+Der Kauf zweier Calls mit den Ausübungspreisen \texttt{b1}=50 GE und
+\texttt{b3}=60 GE und der Verkauf eines Calls mit dem Ausübungspreis
+\texttt{b2}=(\texttt{b1}+\texttt{b3}/2)=55 GE mit derselben Fälligkeit
+für dieselbe Aktie wird als Butterfly bezeichnet. Die jeweiligen Prämien
+der Calls betragen: \texttt{c1}=10 GE, \texttt{c2}=7 GE, \texttt{c3}=5
+GE. Die Gewinn-/Verlustfunktion dieser Optionsstratiegie lässt sich wie
+folgt darstellen:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{80}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+\PY{n}{b1} \PY{o}{=} \PY{l+m+mi}{50}\PY{p}{;} \PY{n}{c1} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} Ausübungspreis 1, Optionsprämie für einen Call 1}
+\PY{n}{b2} \PY{o}{=} \PY{l+m+mi}{55}\PY{p}{;} \PY{n}{c2} \PY{o}{=} \PY{l+m+mi}{7} \PY{c+c1}{\PYZsh{} Ausübungspreis 2, Optionsprämie für einen Call 2}
+\PY{n}{b3} \PY{o}{=} \PY{l+m+mi}{60}\PY{p}{;} \PY{n}{c3} \PY{o}{=} \PY{l+m+mi}{5} \PY{c+c1}{\PYZsh{} Ausübungspreis 3, Optionsprämie für einen Call 3}
+
+\PY{n}{y1} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b1} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b1}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c1} \PY{c+c1}{\PYZsh{} Call blau (Long)}
+\PY{n}{y2} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b2} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b2}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c2} \PY{c+c1}{\PYZsh{} Call orange (Short)}
+\PY{n}{y3} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b3} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b3}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c3} \PY{c+c1}{\PYZsh{} Call grün (Long)}
+\PY{n}{butterfly} \PY{o}{=} \PY{n}{y1} \PY{o}{+} \PY{n}{y3} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{y2} \PY{c+c1}{\PYZsh{} Butterfly}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{70}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der X\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für blauen Call}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n}{y2}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den orangenen Call}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{y3}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den grünen Call }
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{butterfly}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Funktion für den Butterlfy}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn\PYZhy{}Verlust für einen Butterfly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik }
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis der Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichung der X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gewinn/Verlust}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bezeichnung der Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Butterfly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{xy} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{56}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{60}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{,} \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{shrink}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung und Markierung der Funktion mit einem Pfeil}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{aufgabe-3---put-call-parituxe4t-und-deren-graphische-repruxe4sentation}{%
+\subsection{Aufgabe 3 - Put-Call-Parität und deren graphische
+Repräsentation}\label{aufgabe-3---put-call-parituxe4t-und-deren-graphische-repruxe4sentation}}
+
+Variablenverzeichnis: - b = Ausübungspreis (Basispreis) - roh =
+risikoloser Zinssatz - t = Fälligkeit in Jahren - s = Preis der Aktie
+zum Fälligkeitsdatum
+
+\hypertarget{beruxfccksichtigung-des-present-value}{%
+\subsubsection{3.1) Berücksichtigung des Present
+Value}\label{beruxfccksichtigung-des-present-value}}
+
+Annahme: Es wird ein Call mit einem Ausübungspreis i.H.v. 20 GE und
+einer Fälligkeit von drei Monaten betrachtet. Der risikolose Zinssatz
+beträgt 5\%, sodass sich der folgende Barwert ergbit:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{20} \PY{c+c1}{\PYZsh{} Ausübungspreis (Basispreis)}
+\PY{n}{t} \PY{o}{=} \PY{l+m+mi}{3} \PY{o}{/} \PY{l+m+mi}{12} \PY{c+c1}{\PYZsh{} Fälligkeit }
+\PY{n}{roh} \PY{o}{=} \PY{l+m+mf}{0.05} \PY{c+c1}{\PYZsh{} Risikoloser Zinssatz}
+
+\PY{n}{b1} \PY{o}{=} \PY{n}{b} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{n}{roh} \PY{o}{*} \PY{n}{t}\PY{p}{)} \PY{c+c1}{\PYZsh{} Diskontierter Ausübungspreis}
+\PY{n}{b1} \PY{o}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{b1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gerundeter diskontierter Ausübungspreis}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Present Value des Ausübungspreises i.H.v. }\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{b} + \PYZsq{} GE beträgt nach \PYZpc{}f\PYZsq{} \PYZpc{}t + \PYZsq{} Jahren : \PYZsq{} + str(b1) + \PYZsq{} GE\PYZsq{}) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                 Der Present Value des Ausübungspreises i.H.v. 20 GE beträgt
+nach 0.250000 Jahren : 19.75 GE                 |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{graphische-veranschaulichung-der-put-call-parituxe4t}{%
+\subsubsection{3.2) Graphische Veranschaulichung der Put-Call
+Parität}\label{graphische-veranschaulichung-der-put-call-parituxe4t}}
+
+In der folgenden Grafik wird veranschaulicht, dass zwischen Put- und
+Call-Optionen eine feste Beziehung besteht. Sofern der Put und der Call
+sich auf denselben Basiswert beziehen, den selben Strike haben und eine
+identische Laufzeit ausweisen, entspricht der Call + der Barwert des
+abgezinsten Strikes (Cash) dem Put + dem Kassapreis des Barwertes
+(Aktie). Beide Stragegien führen somit zum selben Ergebnis. 1. Fall: Bei
+einem Aktienpreis von unter 20 GE wird der Call auf diese Aktie nicht
+ausgeübt, das vorhandene Cash wird behalten; bei einem Aktienpreis von
+über 20 GE wird der Call auf diese Aktie unter Verwendung des Cashs
+ausgeübt -\textgreater{} Es wird das Maximum aus Aktienpreis und Cash
+ausgezahlt 2. Fall: Bei einem Aktienpreis von unter 20 GE wird der Put
+auf diese Aktie ausgeübt, es werden 20 GE ausgezahlt; bei einem
+Aktienpreis von über 20 GE wird diese behalten -\textgreater{} Es wird
+das Maximum aus dem Payoff des Puts und dem Aktienpreis ausgezahlt
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} Ausübungspreis (Basispreis)}
+\PY{n}{s} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Array mit möglichen Preisen einer Aktie}
+
+\PY{n}{call\PYZus{}payoff} \PY{o}{=} \PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZhy{}} \PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2} \PY{c+c1}{\PYZsh{} Payoff des Calls}
+\PY{n}{put\PYZus{}payoff} \PY{o}{=} \PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{+} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{b} \PY{o}{\PYZhy{}} \PY{n}{s}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{l+m+mi}{2}  \PY{c+c1}{\PYZsh{} Payoff des Puts}
+\PY{n}{cash} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{b} \PY{c+c1}{\PYZsh{} Cash}
+
+\PY{c+c1}{\PYZsh{} Funktion, welche die Platzierrung und Formatierung der Grafik vereinfacht}
+\PY{k}{def} \PY{n+nf}{graph}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{text2}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{xticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Blendet die Beschriftung der X\PYZhy{}Achse aus}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{yticks}\PY{p}{(}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Blendet die Beschriftung der Y\PYZhy{}Achse aus}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der X\PYZhy{}Achse in der Grafik}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)} \PY{c+c1}{\PYZsh{} Grenzen der Y\PYZhy{}Achse in der Grafik}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{b}\PY{p}{,}\PY{n}{b}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die senkrechte, blaue Gerade}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet das \PYZdq{}X\PYZdq{} auf der Y\PYZhy{}Achse}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Plottet das \PYZdq{}X\PYZdq{} auf der X\PYZhy{}Achse}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{n}{b} \PY{o}{*} \PY{l+m+mf}{1.7}\PY{p}{,} \PY{n}{text}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{va}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet und Positioniert die Beschriftung der jeweiligen Grafik}
+    \PY{n}{pl}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{n}{text2}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{25}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die Plus\PYZhy{} und die Minuszeichen}
+
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Payoff des Calls}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{call\PYZus{}payoff}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die Grafik mit dem Payoff des Calls (Oben)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cash}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{cash}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die Grafik mit dem Cash (Oben)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Portfolio A }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{cash} \PY{o}{+} \PY{n}{call\PYZus{}payoff}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die Grafik mit der Kombination aus Call und Cash (Oben)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Payoff des Puts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{put\PYZus{}payoff}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Plottet die Grafik mit dem Payoff des Puts (Unten)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Aktie}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{s}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plottet die Grafik mit der Aktie (Unten)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{;} \PY{n}{graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Portfolio B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;} \PY{n}{pl}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{s} \PY{o}{+} \PY{n}{put\PYZus{}payoff}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Plottet die Grafik mit der Kombination aus Put und Aktie (Unten)}
+\PY{n}{pl}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{aufagbe-4---implizite-volatilituxe4t}{%
+\subsection{Aufagbe 4 - Implizite
+Volatilität}\label{aufagbe-4---implizite-volatilituxe4t}}
+
+Variablenverzeichnis: - s = Preis der Aktie zum Fälligkeitsdatum - b =
+Ausübungspreis (Basispreis) - t = Fälligkeit in Jahren - roh =
+risikofreier Zinssatz - sigma = Volatilität der Aktie, (annualisierte
+Standardabweichung der Renditen) - c = Optionsprämie für einen Call - p
+= Options-Prämie für einen Put
+
+Ein Parameter kann aus der Black-Scholes-Formel nicht direkt beobachtet
+werden: die Volatilität des Aktienkurses. In der Realität wird mit
+impliziten Volatilitäten gearbeitet. Diese sind Volatilitäten, die in
+den am Markt beobachteten Optionespreisen enthalten sind. Implizite
+Volatilitäten werden verwendet, um die Marktmeinung über die Volatilität
+einer bestimmten Aktie zu beobachten. Während historische Volatilitäten
+rückwirkend ermittelt werden, blicken implizite Volatilitäten in die
+Zukunft.
+
+\hypertarget{schuxe4tzung-des-preises-einer-europuxe4ischen-call-option}{%
+\subsubsection{4.1) Schätzung des Preises einer europäischen
+Call-Option}\label{schuxe4tzung-des-preises-einer-europuxe4ischen-call-option}}
+
+Basierend auf dem Black-Scholes-Merton-Modell lässt sich der Preis einer
+europäischen Call-Option in Python wie folgt schätzen: Annahme: s=40;
+b=40; t=0.5; roh=0.05; sigma=0.25
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Definition der Funktion \PYZdq{}bs\PYZus{}call\PYZdq{}, welche die zu entrichtende Prämie einer Call\PYZhy{}Option betimmt}
+\PY{k}{def} \PY{n+nf}{bs\PYZus{}call}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{roh}\PY{p}{,}\PY{n}{sigma}\PY{p}{)}\PY{p}{:}
+    \PY{n}{d1} \PY{o}{=} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{s} \PY{o}{/} \PY{n}{b}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{roh} \PY{o}{+} \PY{n}{sigma} \PY{o}{*} \PY{n}{sigma} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{t} \PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d1}
+    \PY{n}{d2} \PY{o}{=} \PY{n}{d1} \PY{o}{\PYZhy{}} \PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d2}
+    \PY{k}{return} \PY{n}{s} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{d1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{b} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{roh} \PY{o}{*} \PY{n}{t}\PY{p}{)} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{d2}\PY{p}{)} \PY{c+c1}{\PYZsh{} Rückgabe des in dieser Zeile berechneten Wertes}
+
+\PY{c+c1}{\PYZsh{} Ausführung der Funktion}
+\PY{n}{price} \PY{o}{=} \PY{n}{bs\PYZus{}call}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{l+m+mf}{0.05}\PY{p}{,}\PY{l+m+mf}{0.25}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Ausgabe des Ergebnises}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Der Preis der europäischen Call\PYZhy{}Option beträgt }\PY{l+s+si}{\PYZpc{}f}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{price} + \PYZsq{} GE\PYZsq{}) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                                  Der Preis der europäischen Call-Option
+beträgt 3.304006 GE                                 |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{schuxe4tzung-der-impliziten-volatilituxe4t-einer-europuxe4ischen-option-bei-sonst-gegebenen-parametern}{%
+\subsubsection{4.2) Schätzung der impliziten Volatilität einer
+europäischen Option bei sonst gegebenen
+Parametern}\label{schuxe4tzung-der-impliziten-volatilituxe4t-einer-europuxe4ischen-option-bei-sonst-gegebenen-parametern}}
+
+Annahme: Gegeben sind: s=40, b=40, t=0.5, roh=0.05, und c=3.30. Gesucht
+ist sigma, welches nach obiger Rechnung zufolge den Wert 0.25 annehmen
+sollte.
+
+\hypertarget{betrachtung-einer-call-option}{%
+\paragraph{Betrachtung einer Call-Option
+:}\label{betrachtung-einer-call-option}}
+
+Der Funktion ``implied\_vol\_calls()'' werden die bekannten Parameter
+s,b,t,roh und c übergeben. In jeder der 100 Iteration wird systematisch
+ein sigma bestimmt auf Basis dessen die Prämie des Calls berechnet wird.
+Die Berechnung wird gestoppt, sobald die absolute Differenz zwischen dem
+so berechneten und dem vorgegebenen Call-Preis einen kritischen Wert
+unterschreitet. In diesem Fall wurder dieser kritische Wert auf 0.01 GE
+festgelegt.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Definition der Funktion \PYZdq{}implied\PYZus{}vol\PYZus{}calls\PYZdq{}, welche die implizite Volatilität einer Call\PYZhy{}Option betimmt}
+\PY{k}{def} \PY{n+nf}{implied\PYZus{}vol\PYZus{}calls}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{roh}\PY{p}{,}\PY{n}{c}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Führe die folgende Berechnung 100 mal durch}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+        \PY{n}{sigma} \PY{o}{=} \PY{l+m+mf}{0.005} \PY{o}{*} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bestimmung sigma}
+        \PY{n}{d1} \PY{o}{=} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{s} \PY{o}{/} \PY{n}{x}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{roh} \PY{o}{+} \PY{n}{sigma} \PY{o}{*} \PY{n}{sigma} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{t} \PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d1}
+        \PY{n}{d2} \PY{o}{=} \PY{n}{d1} \PY{o}{\PYZhy{}} \PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d2}
+        \PY{n}{diff} \PY{o}{=} \PY{n}{c} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{s} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{d1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{x} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{roh} \PY{o}{*} \PY{n}{t}\PY{p}{)} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{d2}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung Differenz zwischen gegebenen Call\PYZhy{}Preis (3.30) und bestimmten Call\PYZhy{}Preis}
+        \PY{c+c1}{\PYZsh{} Abbruchkriterium}
+        \PY{k}{if} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{diff}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mf}{0.01}\PY{p}{:}
+            \PY{k}{return} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{diff}\PY{p}{)} \PY{c+c1}{\PYZsh{} Rückgabe des in dieser Zeile berechneten Wertes}
+
+\PY{c+c1}{\PYZsh{} Ausführung der Funktion}
+\PY{n}{i}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{diff} \PY{o}{=} \PY{n}{implied\PYZus{}vol\PYZus{}calls}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{l+m+mf}{0.05}\PY{p}{,}\PY{l+m+mf}{3.3}\PY{p}{)} 
+
+\PY{c+c1}{\PYZsh{} Ausgabe des Ergebnises}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iteration=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{i} + \PYZsq{}, Sigma=\PYZpc{}f\PYZsq{} \PYZpc{}sigma + \PYZsq{}, Differenz geschätzter Call\PYZhy{}Preis zum gegeben=\PYZpc{}f\PYZsq{} \PYZpc{}diff) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                     Iteration=49, Sigma=0.250000, Differenz geschätzter Call-
+Preis zum gegeben=-0.004006                    |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{betrachtung-einer-put-option}{%
+\paragraph{Betrachtung einer
+Put-Option:}\label{betrachtung-einer-put-option}}
+
+Im folgenden wird eine Put-Option betrachtet, sodass hierbei die
+Put-Prämie \texttt{p}=1.501 anstelle einer Call-Prämie als letzte
+Input-Variable an die Funktion übergeben wird. Innerhalb der Funktion
+werden zunächst Ausgangswerte initialisiert, welche in den sich
+anschließenden Rechenoperation überschrieben werden. Sobald das
+Abbruchkriterium erreicht wird, werden die berechneten Werte
+zurückgebenen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{implied\PYZus{}vol\PYZus{}put\PYZus{}min}\PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{n}{t}\PY{p}{,}\PY{n}{roh}\PY{p}{,}\PY{n}{p}\PY{p}{)}\PY{p}{:}
+    \PY{n}{implied\PYZus{}vol} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{c+c1}{\PYZsh{} Initialisierung der impliziten Volatilität }
+    \PY{n}{min\PYZus{}value} \PY{o}{=} \PY{l+m+mf}{100.0} \PY{c+c1}{\PYZsh{} Initialisierung des Ausgangswertes für das Abbruchkriteriums}
+    
+    \PY{c+c1}{\PYZsh{} Führe die folgende Berechnung 10000 mal durch}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{:}
+        \PY{n}{sigma} \PY{o}{=} \PY{l+m+mf}{0.0001} \PY{o}{*} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Bestimmung sigma }
+        \PY{n}{d1} \PY{o}{=} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{s} \PY{o}{/} \PY{n}{b}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{roh} \PY{o}{+} \PY{n}{sigma} \PY{o}{*} \PY{n}{sigma} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{t} \PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d1}
+        \PY{n}{d2} \PY{o}{=} \PY{n}{d1} \PY{o}{\PYZhy{}} \PY{n}{sigma} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{t}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung d2}
+        \PY{n}{put} \PY{o}{=} \PY{n}{b} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{roh} \PY{o}{*} \PY{n}{t}\PY{p}{)} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{d2}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{s} \PY{o}{*} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{d1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung der Prämie des Puts}
+        \PY{n}{abs\PYZus{}diff} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{put} \PY{o}{\PYZhy{}} \PY{n}{p}\PY{p}{)} \PY{c+c1}{\PYZsh{} Berechnung der absoluten Diffnerenz}
+        \PY{c+c1}{\PYZsh{} Abbruchkriterium}
+        \PY{k}{if} \PY{n}{abs\PYZus{}diff} \PY{o}{\PYZlt{}} \PY{n}{min\PYZus{}value}\PY{p}{:}
+            \PY{n}{min\PYZus{}value} \PY{o}{=} \PY{n}{abs\PYZus{}diff} \PY{c+c1}{\PYZsh{} Bestimmung des neuen Wertes für das Abbruchkriteriums}
+            \PY{n}{implied\PYZus{}vol} \PY{o}{=} \PY{n}{sigma} \PY{c+c1}{\PYZsh{} Bestimmung der impliziten Volatilität }
+            \PY{n}{k} \PY{o}{=} \PY{n}{i} \PY{c+c1}{\PYZsh{} Bestimmung der Iteration}
+        \PY{n}{put\PYZus{}out} \PY{o}{=} \PY{n}{put} \PY{c+c1}{\PYZsh{} Bestimmung des Puts}
+    \PY{k}{return}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{implied\PYZus{}vol}\PY{p}{,} \PY{n}{put\PYZus{}out}\PY{p}{,} \PY{n}{min\PYZus{}value}\PY{p}{)} \PY{c+c1}{\PYZsh{} Rückgabe der berechneten Wertes}
+
+\PY{c+c1}{\PYZsh{} Ausführung der Funktion}
+\PY{n}{k}\PY{p}{,} \PY{n}{implied\PYZus{}vol}\PY{p}{,} \PY{n}{put\PYZus{}out}\PY{p}{,} \PY{n}{min\PYZus{}value} \PY{o}{=} \PY{n}{implied\PYZus{}vol\PYZus{}put\PYZus{}min}\PY{p}{(}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{40}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mf}{1.501}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Ausgabe des Ergebnises}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iteration=}\PY{l+s+si}{\PYZpc{}d}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}}\PY{k}{k} + \PYZsq{}, Implizite Volatilität=\PYZpc{}f\PYZsq{} \PYZpc{}implied\PYZus{}vol + \PYZsq{}, Payoff Put=\PYZpc{}f\PYZsq{} \PYZpc{}put\PYZus{}out + \PYZsq{}, Absolute Differenz=\PYZpc{}f\PYZsq{} \PYZpc{}min\PYZus{}value) + \PYZsq{}| \PYZsq{})
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|              Iteration=1999, Implizite Volatilität=0.200000, Payoff
+Put=12.751880, Absolute Differenz=0.000367              |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \hypertarget{aufagbe-5---volatility-smile-and-skewness}{%
+\subsection{Aufagbe 5 - Volatility smile and
+skewness}\label{aufagbe-5---volatility-smile-and-skewness}}
+
+Zwischen den Aktienkursen und der Volatilität besteht eine negative
+Korrelation. Wenn sich die Preise nach unten (nach oben) bewegen, neigen
+Volatilitäten dazu, sich nach oben (nach unten) zu bewegen. Die
+implizite Volatilität ist relativ gering für at-the-money Optionen, wird
+aber größer für Optionen die in-the-money oder out-of-the-money sind.
+Das Volatility-Smile zeigt diesen Zusammenhang auf und ist in der
+folgenden Grafik veranschaulicht.
+
+Des Weiteren lässt sich mitunter auch das sogenannte Volatility-Skew
+beobachten, welches durch das Verhältnis von Angebot und Nachfrage
+bestimmter Optionen beeinflusst wird, und darüber Aufschluss gibt, ob
+Fondsmanager vorwiegend Calls oder Puts zeichnen.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Dictonary in welchem die Ticker\PYZhy{}Kürzel hinterlegt sind}
+\PY{n}{AG\PYZus{}Dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Apple}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AAPL}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Amazon}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AMZN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{VW}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{VOW.DE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{BASF}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BAS.DE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Microsoft}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSFT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+           \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tesla}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{TSLA}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Abfrage zur Auswahl des Unternehmens}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Es sind die folgenden Unternehmen betrachtbar:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{counter} \PY{o}{=} \PY{l+m+mi}{0}
+\PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{AG\PYZus{}Dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)} \PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{counter}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{) }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{)}
+    \PY{n}{counter} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{My\PYZus{}AG} \PY{o}{=} \PY{n+nb}{input}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bitte geben Sie namentlich ein Unternehmen aus der Liste ein:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Ausgabe verfügbare Fälligkeiten}
+
+\PY{n}{AG} \PY{o}{=} \PY{n}{yf}\PY{o}{.}\PY{n}{Ticker}\PY{p}{(}\PY{n}{AG\PYZus{}Dict}\PY{p}{[}\PY{n}{My\PYZus{}AG}\PY{p}{]}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Für }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{My\PYZus{}AG}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ sind Optionen mit den folgenden Fälligkeiten verfügbar:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{maturitys} \PY{o}{=} \PY{n}{AG}\PY{o}{.}\PY{n}{options}
+\PY{n}{counter} \PY{o}{=} \PY{l+m+mi}{0}
+\PY{k}{for} \PY{n}{maturity} \PY{o+ow}{in} \PY{n}{maturitys}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{counter}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{) }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{maturity}\PY{p}{)}\PY{p}{)}
+    \PY{n}{counter} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Wahl eines Fälligkeitstermins}
+
+\PY{n}{My\PYZus{}Date} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bitte geben Sie die Nummer der gewünschten Fälligkeit ein:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{AG\PYZus{}options} \PY{o}{=} \PY{n}{AG}\PY{o}{.}\PY{n}{option\PYZus{}chain}\PY{p}{(}\PY{n}{AG}\PY{o}{.}\PY{n}{options}\PY{p}{[}\PY{n}{My\PYZus{}Date}\PY{p}{]}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{AG\PYZus{}options}\PY{o}{.}\PY{n}{calls}
+\PY{n}{data} \PY{o}{=} \PY{n}{AG\PYZus{}options}\PY{o}{.}\PY{n}{puts}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Vereinfachter DataFrame mit Informationen zu den Kontrakten}
+
+\PY{n}{stock\PYZus{}overview} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bezeichnung}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{contractSymbol}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Strike}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{strike}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ask}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ask}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volatilität}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{impliedVolatility}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{InTheMoney}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inTheMoney}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{centered}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ausgewählt wurde }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{My\PYZus{}AG}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ zur Fälligkeit }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{AG}\PY{o}{.}\PY{n}{options}\PY{p}{[}\PY{n}{My\PYZus{}Date}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{| }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{stock\PYZus{}overview}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Generierung der Grafik für das Volatility Smile }
+
+\PY{n}{x} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{strike}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{} Speichere die eingelesenen Daten aus der Spalte \PYZsq{}Strike\PYZsq{} als die Variable x}
+\PY{n}{y} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{impliedVolatility}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{} Überführe die eingelesenen Daten aus der Spalte \PYZsq{}Implied Volatility\PYZsq{} in eine Liste}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volatility smile}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Titel der Grafik}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Volatilität}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung Y\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Preis des Strikes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Beschriftung X\PYZhy{}Achse}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Plotten der Datenpunkte}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Gitternetz}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Funktion zum anzeigen der Grafik}
+
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}\PYZsh{}}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Referenzfall}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{SCREEN\PYZus{}WIDTH} \PY{o}{*} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{asplt}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                                        Es sind die folgenden Unternehmen
+betrachtbar:                                       |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+0) Apple
+1) Amazon
+2) VW
+3) BASF
+4) Microsoft
+5) Tesla
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                                Bitte geben Sie namentlich ein Unternehmen aus
+der Liste ein:                                | Apple
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                              Für Apple sind Optionen mit den folgenden
+Fälligkeiten verfügbar:                              |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+0) 2020-01-24
+1) 2020-01-31
+2) 2020-02-07
+3) 2020-02-14
+4) 2020-02-21
+5) 2020-02-28
+6) 2020-03-20
+7) 2020-04-17
+8) 2020-06-19
+9) 2020-07-17
+10) 2020-09-18
+11) 2021-01-15
+12) 2021-06-18
+13) 2021-09-17
+14) 2022-01-21
+15) 2022-06-17
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                                  Bitte geben Sie die Nummer der gewünschten
+Fälligkeit ein:                                 | 1
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+|                                      Ausgewählt wurde Apple zur Fälligkeit
+2020-01-31.                                      |
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+            Bezeichnung  Strike     Bid     Ask  Volatilität  InTheMoney
+0   AAPL200131P00190000   190.0    0.00    0.02     1.125004       False
+1   AAPL200131P00195000   195.0    0.00    0.23     1.355472       False
+2   AAPL200131P00200000   200.0    0.00    0.02     1.015630       False
+3   AAPL200131P00205000   205.0    0.00    0.03     1.000005       False
+4   AAPL200131P00210000   210.0    0.00    0.25     1.181645       False
+..                  {\ldots}     {\ldots}     {\ldots}     {\ldots}          {\ldots}         {\ldots}
+61  AAPL200131P00370000   370.0   52.35   52.65     0.761721        True
+62  AAPL200131P00375000   375.0   57.30   57.65     0.808107        True
+63  AAPL200131P00380000   380.0   61.50   62.05     0.756838        True
+64  AAPL200131P00410000   410.0   91.15   92.70     1.029302        True
+65  AAPL200131P00420000   420.0  102.45  102.65     1.209721        True
+
+[66 rows x 6 columns]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_35_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+\#-------------------------------------------------------------------------------
+----------------------------------------------\#
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_35_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
